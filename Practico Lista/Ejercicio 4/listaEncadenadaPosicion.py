@@ -22,7 +22,7 @@ class ListaEncadenadaPos:
         valor = -1
         if not self.vacia():
             aux = self.__primer
-            while aux.getSiguiente() is not None: # recorre hasta el final
+            while aux.getSiguiente() is not None:  # recorre hasta el final
                 aux = aux.getSiguiente()
             valor = aux.getDato()
         return valor
@@ -39,7 +39,7 @@ class ListaEncadenadaPos:
                     i += 1
                     aux = aux.getSiguiente()
                 if i == pos:
-                    valor = aux.getSiguiente() # retorna el siguiente
+                    valor = aux.getSiguiente()  # retorna el siguiente
         return valor
 
     def anterior(self, pos):
@@ -48,7 +48,7 @@ class ListaEncadenadaPos:
             if pos == 0:
                 valor = None
             else:
-                i = 1 # para que se coloque en la posición anterior deseada
+                i = 1  # para que se coloque en la posición anterior deseada
                 aux = self.__primer
                 while aux.getSiguiente() is not None and i < pos:
                     i += 1
@@ -158,12 +158,13 @@ class ListaEncadenadaPos:
         aux = self.__primer
         cant = 0
         band = False
-        while not band:
+        while aux is not None:
             dato = aux.getDato()
-            anioAux = dato.getAnio()
-            if anioAux == anio:
-                if (materia == dato.getMateria()) and (cargo == dato.getCargo()):
-                    cant += 1
+            anioAux = int(dato.getAnio())
+            if (anioAux == anio) and (not band):
+                if (materia.lower() == dato.getMateria().lower()) and (cargo.lower() == dato.getCargo().lower()):
+                    cant += int(dato.getVarones())
+                    cant += int(dato.getMujeres())
             elif anioAux == anio + 1:
                 band = True
             aux = aux.getSiguiente()
