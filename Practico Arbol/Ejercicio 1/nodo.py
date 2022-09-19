@@ -25,5 +25,3 @@ class Nodo:
 
     def getDer(self):
         return self.__der
-
-    
