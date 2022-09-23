@@ -16,12 +16,7 @@ class Arbol:
     def mostrarRaiz(self):
         return self.__raiz.getDato()
 
-    def insertarRaiz(self, dato):
-        raiz = Nodo(dato)
-        self.__raiz = raiz
-
-    def buscar(self, arbol, dato):
-        print(arbol.getDato())
+    def buscar(self, arbol, dato, nivel=0):
         if self.vacio(arbol):
             print('ERROR - Elemento inexistente.')
         else:
@@ -30,35 +25,35 @@ class Arbol:
                     print('El dato "{}" se encuentra en el arbol.'.format(dato))
                 elif dato < arbol.getDato():
                         arbol = arbol.getIzq()
-                        self.buscar(arbol, dato)
+                        nivel += 1
+                        nivel = self.buscar(arbol, dato, nivel)
                 else:
                     arbol = arbol.getDer()
-                    self.buscar(arbol, dato)
+                    nivel += 1
+                    print('se aumento el nivel: {}'.format(nivel))
+                    nivel = self.buscar(arbol, dato, nivel)
+        return nivel
     
     def insertar(self, arbol, dato):
         if self.vacio(arbol):
             unNodo = Nodo(dato)
+            self.__raiz = unNodo
         else:
             if dato == arbol.getDato():
                 print('ERROR - El elemento ya existe en el árbol.')
             elif dato < arbol.getDato():
-                arbol = arbol.getIzq()
-                self.insertar(arbol, dato)
+                if arbol.getIzq() is None:
+                    arbol.setIzq(Nodo(dato))
+                else:
+                    arbol = arbol.getIzq()
+                    self.insertar(arbol, dato)
             else:
-                arbol = arbol.getDer()
-                self.insertar(arbol, dato)
+                if arbol.getDer() is None:
+                    arbol.setDer(Nodo(dato))
+                else:
+                    arbol = arbol.getDer()
+                    self.insertar(arbol, dato)
 
-
-    #def insertar(self, x):
-    #    if self.vacio():
-    #        self.__raiz = Nodo(x)
-    #    else:
-    #        if self.__raiz.getDato()==x:
-    #            print("Elemento ya Existe")
-    #        else:
-    #            if self.__raiz.getDato() < x:
-    #                unNodo = Nodo(x)
-    #                self.__raiz.setIzq(unNodo)
-    #            else:
-    #                unNodo = Nodo(x)
-    #                self.__raiz.setDer(unNodo)
+    def nivel(self, arbol, dato):
+        nivel = self.buscar(arbol, dato)
+        return nivel

@@ -3,10 +3,10 @@ from arbol import Arbol
 
 if __name__ == '__main__':
     arbol = Arbol()
-    arbol.insertarRaiz(4)
-    raiz = arbol.getRaiz()
-    arbol.insertar(raiz, 6)
-    arbol.insertar(raiz, 1)
-    arbol.buscar(raiz, 6)
-    #print(arbol.mostrarRaiz())
-    
+    arbol.insertar(arbol.getRaiz(),4)
+    arbol.insertar(arbol.getRaiz(), 6)
+    arbol.insertar(arbol.getRaiz(), 2)
+    arbol.insertar(arbol.getRaiz(), 8)
+    arbol.insertar(arbol.getRaiz(), 5)
+    arbol.insertar(arbol.getRaiz(), 7)
+    print('Nivel: {}'.format(arbol.nivel(arbol.getRaiz(), 7)))
