@@ -124,3 +124,37 @@ class Arbol:
                 arbol = arbol.getDer()
                 esPadre = self.esPadre(arbol, dato1, dato2)
         return esPadre
+
+    def altura(self, arbol, dato=9999999, nivel=0):
+        if self.vacio(arbol):
+            pass
+        else:
+            if arbol.getDato() == dato:
+                arbol = None
+            elif dato < arbol.getDato():
+                    arbol = arbol.getIzq()
+                    nivel += 1
+                    nivel = self.altura(arbol, dato, nivel)
+            else:
+                arbol = arbol.getDer()
+                nivel += 1
+                nivel = self.altura(arbol, dato, nivel)
+        return nivel
+
+    def preOrden(self, arbol):
+        if not self.vacio(arbol):
+            print(arbol.getDato())
+            self.preOrden(arbol.getIzq())
+            self.preOrden(arbol.getDer())
+    
+    def inOrden(self, arbol):
+        if not self.vacio(arbol):
+            self.inOrden(arbol.getIzq())
+            print(arbol.getDato())
+            self.inOrden(arbol.getDer())
+
+    def postOrden(self, arbol):
+        if not self.vacio(arbol):
+            self.postOrden(arbol.getIzq())
+            self.postOrden(arbol.getDer())
+            print(arbol.getDato())
