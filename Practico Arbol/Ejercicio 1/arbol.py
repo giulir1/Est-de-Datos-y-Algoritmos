@@ -65,7 +65,7 @@ class Arbol:
                 nivel = self.nivel(arbol, dato, nivel)
         return nivel
 
-    def hoja(self, arbol, dato):
+    def esHoja(self, arbol, dato):
         esHoja = 'El nodo con clave {} no es hoja'.format(dato)
         if self.vacio(arbol):
             esHoja = 'ERROR - Elemento inexistente.'
@@ -81,10 +81,10 @@ class Arbol:
                 esHoja = self.hoja(arbol, dato)
         return esHoja
 
-    def hijo(self, arbol, dato1, dato2):
+    def esHijo(self, arbol, dato1, dato2):
         esHijo = 'El nodo con clave {} no es hijo del nodo con clave {}.'.format(dato1, dato2)
         if self.vacio(arbol):
-            esHijo = 'ERROR - Al menos uno de los nodos ingresados no existe en el arbol.'
+            esHijo = 'ERROR - El nodo ingresado como padre no existe en el arbol.'
         else:
             if arbol.getDato() == dato2:
                 izq = arbol.getIzq()
@@ -97,19 +97,18 @@ class Arbol:
                         esHijo = 'El nodo con clave {} es hijo del nodo con clave {}.'.format(dato1, dato2)
             elif dato2 < arbol.getDato():
                 arbol = arbol.getIzq()
-                esHijo = self.hijo(arbol, dato1, dato2)
+                esHijo = self.esHijo(arbol, dato1, dato2)
             else:
                 arbol = arbol.getDer()
-                esHijo = self.hijo(arbol, dato1, dato2)
+                esHijo = self.esHijo(arbol, dato1, dato2)
         return esHijo
                 
-    def padre(self, arbol, dato1, dato2):
+    def esPadre(self, arbol, dato1, dato2):
         esPadre = 'El nodo con clave {} no es padre del nodo con clave {}.'.format(dato1, dato2)
         if self.vacio(arbol):
-            esPadre = 'ERROR - Al menos uno de los nodos ingresados no existe en el arbol.'
+            esPadre = 'ERROR - El nodo ingresado como padre no existe en el arbol.'
         else:
             if arbol.getDato() == dato1:
-                print('encontro dato')
                 izq = arbol.getIzq()
                 der = arbol.getDer()
                 if izq is not None:
@@ -118,10 +117,10 @@ class Arbol:
                 if der is not None:
                     if der.getDato() == dato2:
                         esPadre = 'El nodo con clave {} es padre del nodo con clave {}.'.format(dato1, dato2)
-            elif dato2 < arbol.getDato():
+            elif dato1 < arbol.getDato():
                 arbol = arbol.getIzq()
-                esPadre = self.padre(arbol, dato1, dato2)
+                esPadre = self.esPadre(arbol, dato1, dato2)
             else:
                 arbol = arbol.getDer()
-                esPadre = self.padre(arbol, dato1, dato2)
+                esPadre = self.esPadre(arbol, dato1, dato2)
         return esPadre
