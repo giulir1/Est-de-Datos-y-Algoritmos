@@ -1,0 +1,5 @@
+https://appgametutoriales.com/redondeo-en-python-numero-de-decimales-hacia-arriba-y-hacia-abajo/
+
+https://programminghistorian.org/es/lecciones/manipular-cadenas-de-caracteres-en-python#cortar
+
+https://www.freecodecamp.org/espanol/news/sustraer-una-cadena-caracteres-en-python/
