@@ -6,7 +6,7 @@ class Arbol:
 
     def __init__(self):
         self.__raiz = None
-    
+
     def vacio(self, arbol):
         return arbol == None
 
@@ -18,17 +18,20 @@ class Arbol:
 
     def buscar(self, arbol, dato):
         if self.vacio(arbol):
-            print('ERROR - Elemento inexistente.')
+            print('ERROR - Elemento "{}" inexistente.'.format(dato))
+            return None
         else:
             if arbol.getDato() == dato:
-                print('El dato "{}" se encuentra en el arbol.'.format(dato))
+                pass
+                # print('El dato "{}" se encuentra en el arbol.'.format(dato))
             elif dato < arbol.getDato():
-                    arbol = arbol.getIzq()
-                    self.buscar(arbol, dato)
+                arbol = arbol.getIzq()
+                arbol = self.buscar(arbol, dato)
             else:
                 arbol = arbol.getDer()
-                self.buscar(arbol, dato)
-    
+                arbol = self.buscar(arbol, dato)
+        return arbol
+
     def insertar(self, arbol, dato):
         if self.vacio(arbol):
             unNodo = Nodo(dato)
@@ -49,9 +52,34 @@ class Arbol:
                     arbol = arbol.getDer()
                     self.insertar(arbol, dato)
 
+    def suprimir(self, arbol, dato):
+        pass
+
+    def camino(self, dato1, dato2, nodos=[]):
+        nodo1 = self.buscar(self.__raiz, dato1)
+        nodo2 = self.buscar(self.__raiz, dato2)
+        if (nodo1 is not None) and (nodo2 is not None):
+            if dato1 < dato2:
+                nodo1 = nodo1.getDer()
+                if nodo1 is not None:
+                    nodos.append(dato1)
+                    dato1 = nodo1.getDato()
+                    self.camino(dato1, dato2)
+            elif dato1 > dato2:
+                nodo1 = nodo1.getIzq()
+                if nodo1 is not None:
+                    nodos.append(dato1)
+                    dato1 = nodo1.getDato()
+                    self.camino(dato1, dato2)
+            else:
+                nodos.append(dato1)
+        if (dato1 not in nodos) or (dato2 not in nodos):
+            nodos = 'Camino inexistente.'
+        return nodos
+
     def nivel(self, arbol, dato, nivel=0):
         if self.vacio(arbol):
-            nivel = ('ERROR - Elemento inexistente.')
+            nivel = 'ERROR - Elemento inexistente.'
         else:
             if arbol.getDato() == dato:
                 arbol = None
@@ -75,10 +103,10 @@ class Arbol:
                     esHoja = 'El nodo con clave {} es hoja.'.format(dato)
             elif dato < arbol.getDato():
                 arbol = arbol.getIzq()
-                esHoja = self.hoja(arbol, dato)
+                esHoja = self.esHoja(arbol, dato)
             else:
                 arbol = arbol.getDer()
-                esHoja = self.hoja(arbol, dato)
+                esHoja = self.esHoja(arbol, dato)
         return esHoja
 
     def esHijo(self, arbol, dato1, dato2):
@@ -102,7 +130,7 @@ class Arbol:
                 arbol = arbol.getDer()
                 esHijo = self.esHijo(arbol, dato1, dato2)
         return esHijo
-                
+
     def esPadre(self, arbol, dato1, dato2):
         esPadre = 'El nodo con clave {} no es padre del nodo con clave {}.'.format(dato1, dato2)
         if self.vacio(arbol):
@@ -125,28 +153,24 @@ class Arbol:
                 esPadre = self.esPadre(arbol, dato1, dato2)
         return esPadre
 
-    def altura(self, arbol, dato=9999999, nivel=0):
-        if self.vacio(arbol):
-            pass
-        else:
-            if arbol.getDato() == dato:
-                arbol = None
-            elif dato < arbol.getDato():
-                    arbol = arbol.getIzq()
-                    nivel += 1
-                    nivel = self.altura(arbol, dato, nivel)
-            else:
-                arbol = arbol.getDer()
-                nivel += 1
-                nivel = self.altura(arbol, dato, nivel)
-        return nivel
+    def altura(self, nodo, altura=0, maximo=0):
+        if nodo is not None:
+            dato = self.altura(nodo.getIzq(), altura+1, maximo)
+            if altura > maximo:
+                maximo = altura
+            if dato > maximo:
+                maximo = dato
+            dato = self.altura(nodo.getDer(), altura+1, maximo)
+            if dato > maximo:
+                maximo = dato
+        return maximo
 
     def preOrden(self, arbol):
         if not self.vacio(arbol):
             print(arbol.getDato())
             self.preOrden(arbol.getIzq())
             self.preOrden(arbol.getDer())
-    
+
     def inOrden(self, arbol):
         if not self.vacio(arbol):
             self.inOrden(arbol.getIzq())
