@@ -1,7 +1,7 @@
-from grafo import Grafo
+from grafoSec import GrafoSec
 
-if __name__=='__main__':
-    unGrafo = Grafo()
+if __name__ == '__main__':
+    unGrafo = GrafoSec()
     unGrafo.agregarNodos()
     unGrafo.nuevaArista(1, 2)
     unGrafo.nuevaArista(0, 2)
@@ -11,4 +11,8 @@ if __name__=='__main__':
     unGrafo.nuevaArista(0, 4)
     unGrafo.nuevaArista(0, 0)
     unGrafo.mostrarMatriz()
-    print(unGrafo.adyacentes(0))
+    print(unGrafo.adyacentes('a'))
+    print(unGrafo.caminoNodo('a'))
+    print(unGrafo.camino('a', 'e'))
+    print(unGrafo.gradoEntrada('a'))
+    print(unGrafo.gradoSalida('a'))
